@@ -1,1 +1,56 @@
-hw geo
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+  <head>
+    <title>Illinois Population Density, 2014</title>
+    
+  </head>
+  <style>
+
+    .counties {
+      fill: none;
+      stroke: none;
+    }
+
+    .states {
+      fill: none;
+      stroke: #fff;
+      stroke-linejoin: round;
+    }
+
+  </style>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/topojson.v2.min.js"></script>
+
+  <body>
+    <h1>Illinois Population Density, 2014</h1>
+    <svg width="960" height="1000"></svg>
+
+    <script>
+      var svg = d3.select("svg"),
+          width = +svg.attr("width"),
+          height = +svg.attr("height");
+
+      var path = d3.geoPath();
+
+      var color = d3.scaleThreshold().domain([1, 10, 50, 200, 500, 1000, 2000, 4000]).range(d3.schemeOrRd[9]);
+
+      d3.queue().defer(d3.json, "./il-topo.json").await(ready);
+
+      function ready(error, il) {
+        if (error) throw error;
+        console.log(il);
+        console.log(topojson.feature(il, il.objects.tracts).features);
+
+        svg.append("g").attr("class", "counties")
+                       .selectAll("path")
+                       .data(topojson.feature(il, il.objects.tracts).features)
+                       .enter() 
+                       .append("path")
+                         .attr("fill", function (d) { return color(d.properties.density); })
+                         .attr("d", path);
+      }
+    </script>
+  </body>
+</html>
