@@ -169,10 +169,10 @@
               </td>
               <td style="width: 33%;">
                 <h4>Code sources:</h4>
-                <a style="font-size: 11px;" href="https://bl.ocks.org/mbostock/3883245">Line chart</a>
-                <a style="font-size: 11px;" href="https://bl.ocks.org/mbostock/3887051">Grouped bar chart</a>
-                <a style="font-size: 11px;" href="https://bl.ocks.org/mbostock/3886208">Stacked bar chart</a>
-                <a style="font-size: 11px;" href="https://bost.ocks.org/mike/map/">Geo spatial mapping</a>
+                <a style="font-size: 11px;" href="https://bl.ocks.org/mbostock/3883245">Line chart</a><br>
+                <a style="font-size: 11px;" href="https://bl.ocks.org/mbostock/3887051">Grouped bar chart</a><br>
+                <a style="font-size: 11px;" href="https://bl.ocks.org/mbostock/3886208">Stacked bar chart</a><br>
+                <a style="font-size: 11px;" href="https://bost.ocks.org/mike/map/">Geo spatial mapping</a><br>
 
               </td>
             </tr>
@@ -639,6 +639,7 @@ d3.csv("numberofkids.csv", function(d, i, columns) {
 }, function(error, data) {
   if (error) throw error;
 
+  console.log(data);
   var keys = data.columns.slice(1);
 
   kids_x.domain(data.map(function(d) { return d.Region; }));
@@ -660,7 +661,7 @@ d3.csv("numberofkids.csv", function(d, i, columns) {
       .attr("x", function(d) { 
                     if (d.data.Region == "Qazaqstan") {
                       var rect = d3.select(this)._groups[0][0];
-                      rect.style.fill = rect.parentNode.dataset.colorred;
+                      rect.style.fill = rect.parentNode.getAttribute("data-colorred");
                     }
                     return kids_x(d.data.Region); 
                  })
@@ -760,13 +761,13 @@ d3.csv("numberofkids.csv", function(d, i, columns) {
       //by duration bar chart
       var duration_bars = document.getElementsByClassName("dur_class_"+remember_name);
       for (var i=0; i<duration_bars.length; i++) {
-        duration_bars[i].style.fill = duration_bars[i].dataset.colorgray;
+        duration_bars[i].style.fill = duration_bars[i].getAttribute("data-colorgray");
       }
 
       //kids
       var kid_bars = document.getElementsByClassName("kids_class_"+remember_name);
       for (var i=0; i<kid_bars.length; i++) {
-        kid_bars[i].style.fill = kid_bars[i].parentNode.dataset.colorgray;
+        kid_bars[i].style.fill = kid_bars[i].parentNode.getAttribute("data-colorgray");
       }
     }
 
@@ -787,23 +788,23 @@ d3.csv("numberofkids.csv", function(d, i, columns) {
       //by duration bar chart
       var duration_bars = document.getElementsByClassName("dur_class_"+name);
       for (var i=0; i<duration_bars.length; i++) {
-        duration_bars[i].style.fill = duration_bars[i].dataset.colorred;
+        duration_bars[i].style.fill = duration_bars[i].getAttribute("data-colorred");
       }
 
       //kids
       var kid_bars = document.getElementsByClassName("kids_class_"+name);
       for (var i=0; i<kid_bars.length; i++) {
-        kid_bars[i].style.fill = kid_bars[i].parentNode.dataset.colorred;
+        kid_bars[i].style.fill = kid_bars[i].parentNode.getAttribute("data-colorred");
       }
 
       //age
       var age_span = document.getElementById("age-span");
-      var age_data = document.getElementById("age_id_"+name).dataset.age;
+      var age_data = document.getElementById("age_id_"+name).getAttribute("data-age");
       age_span.innerHTML = age_data;
 
       //kids
       var kids_span = document.getElementById("kids-span");
-      var kids_data = document.getElementById("kids_id_"+name).dataset.kids;
+      var kids_data = document.getElementById("kids_id_"+name).getAttribute("data-kids");
       kids_span.innerHTML = kids_data;
 
       //update name
@@ -819,7 +820,7 @@ d3.csv("numberofkids.csv", function(d, i, columns) {
       //kids
       var kid_bars = document.getElementsByClassName("kids_class_"+remember_name);
       for (var i=0; i<kid_bars.length; i++) {
-        kid_bars[i].style.fill = kid_bars[i].parentNode.dataset.colorred;
+        kid_bars[i].style.fill = kid_bars[i].parentNode.getAttribute("data-colorred");
       }
       //age
       var age_span = document.getElementById("age-span");
